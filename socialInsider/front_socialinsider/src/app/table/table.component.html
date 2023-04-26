@@ -1,0 +1,42 @@
+<div *ngIf="isFetching; else loaded" class="no-data-available">
+    Loading data ...
+</div>
+<ng-template #loaded>
+    <table mat-table *ngIf="dataSource.data.length > 0" [dataSource]="dataSource">
+        <!-- Brandname Column -->
+        <ng-container matColumnDef="brandname">
+            <th mat-header-cell *matHeaderCellDef> Brand Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Total Profiles Column -->
+        <ng-container matColumnDef="totalProfiles">
+            <th mat-header-cell *matHeaderCellDef> Total Profiles </th>
+            <td mat-cell *matCellDef="let element"> {{element.number_profiles}} </td>
+        </ng-container>
+
+        <!-- Total Fans Column -->
+        <ng-container matColumnDef="totalFollowers">
+            <th mat-header-cell *matHeaderCellDef> Total Fallowers </th>
+            <td mat-cell *matCellDef="let element"> {{element.totalFollowers}} </td>
+        </ng-container>
+
+        <!-- Total Engadgement Column -->
+        <ng-container matColumnDef="totalEngadgement">
+            <th mat-header-cell *matHeaderCellDef> Total Engadgement </th>
+            <td mat-cell *matCellDef="let element"> {{element.totalEngadgement}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+    <div *ngIf="dataSource.data.length == 0 && !isFetching" class="no-data-available">
+        <p>No data available.
+        </p>
+        <p> Enter a date range to get the informations!
+        </p>
+    </div>
+</ng-template>
+<app-datepicker (newTableChange)="onFilter($event)"></app-datepicker>
